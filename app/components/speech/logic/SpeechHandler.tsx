@@ -4,7 +4,7 @@ import MicrophoneButton from '../MicrophoneButton';
 import { getTokenOrRefresh } from '../../../js/token_util';
 import * as speechsdk from "microsoft-cognitiveservices-speech-sdk"
 import ReferenceText from '../ReferenceText';
-import { Result } from 'postcss';
+import { Phonogram } from '../../../js/types';
 
 type SpeechHandlerProps = {
     
@@ -12,13 +12,13 @@ type SpeechHandlerProps = {
 
 const SpeechHandler:React.FC<SpeechHandlerProps> = () => {
 
-    const [referenceText, updateReferenceText] = useState('people');
+    const [referenceText, updateReferenceText] = useState("That quick beige fox jumped in the air over each thin dog. Look out, I shout, for he's foiled you again, creating chaos.");
     const [displayText, setDisplayText] = useState('INITIALIZED: ready to test speech...');
     const [microphoneOn, setMicrophoneOn] = useState(false);
-    const [pronouncationResult, setPronouncationResult] = useState<speechsdk.PronunciationAssessmentResult>();
+    const [pronouncationResult, setPronouncationResult] = useState<Phonogram>();
 
 
-    // This function will 
+    // This function will reconize speech from the user and updated pronouncationResult with the result.
     async function speechToResults() {
       
         const tokenObj = await getTokenOrRefresh();
@@ -37,22 +37,32 @@ const SpeechHandler:React.FC<SpeechHandlerProps> = () => {
 
         pronunciationAssessmentConfig.applyTo(recognizer);
         
-
         setMicrophoneOn(true);
 
         recognizer.recognizeOnceAsync((result: speechsdk.SpeechRecognitionResult) => {
-            setPronouncationResult(speechsdk.PronunciationAssessmentResult.fromResult(result));
+            if(result.reason === speechsdk.ResultReason.RecognizedSpeech) {
+                
+
+                var resultJson = JSON.parse(result.properties.getProperty(speechsdk.PropertyId.SpeechServiceResponse_JsonResult)) as Phonogram;
+                
+                console.log(resultJson);
+                
+                setPronouncationResult(resultJson);
+            }
+
+            setMicrophoneOn(false);
         });
 
-        setMicrophoneOn(false);
     }
 
     return <div>
         <div className='flex justify-center flex flex-col'>
 
-            hello 
+            {microphoneOn ? <p className='text-3xl'> SPEAKING </p> : <p className='text-3xl'> NOT SPEAKING </p>}
+            {displayText}
             <ReferenceText text={referenceText}/>
             <MicrophoneButton isMicrophoneOn={microphoneOn} whenClicked={speechToResults}/>
+
         </div>
 
 
