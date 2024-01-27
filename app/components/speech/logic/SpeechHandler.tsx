@@ -7,25 +7,16 @@ import ReferenceText from '../ReferenceText';
 import { Phonogram, Phonic_Results} from '../../../js/types';
 
 type SpeechHandlerProps = {
+    phonicResults: Phonic_Results;
     
 };
 
-const SpeechHandler:React.FC<SpeechHandlerProps> = () => {
+const SpeechHandler:React.FC<SpeechHandlerProps> = ({phonicResults}) => {
 
     const [referenceText, updateReferenceText] = useState("That quick beige fox jumped in the air over each thin dog. Look out, I shout, for he's foiled you again, creating chaos.");
     const [displayText, setDisplayText] = useState('INITIALIZED: ready to test speech...');
-    const [microphoneOn, setMicrophoneOn] = useState(false);
-    const [phonogramResults, setPhonogramResults] = useState<Phonic_Results>();
+    const [microphoneState, setMicrophoneState] = useState<"off" | "on" | "loading">( "off" );
 
-    // This function will check if myPhonicScore used in phonic_results is in local storage.
-    useEffect(() => {
-        const phonogramResults = window.localStorage.getItem('phonogramResults');
-        if (phonogramResults) {
-            setPhonogramResults(new Phonic_Results(JSON.parse(phonogramResults)));
-        } else {
-            setPhonogramResults(new Phonic_Results());
-        }
-    });
 
 
     // This function will reconize speech from the user and updated pronouncationResult with the result.
@@ -47,34 +38,44 @@ const SpeechHandler:React.FC<SpeechHandlerProps> = () => {
 
         pronunciationAssessmentConfig.applyTo(recognizer);
         
-        setMicrophoneOn(true);
+        setMicrophoneState("on");
 
         recognizer.recognizeOnceAsync((result: speechsdk.SpeechRecognitionResult) => {
+
+            setMicrophoneState("loading");
+
             if(result.reason === speechsdk.ResultReason.RecognizedSpeech) {
-
-
 
                 var resultJson = JSON.parse(result.properties.getProperty(speechsdk.PropertyId.SpeechServiceResponse_JsonResult)) as Phonogram;
                 window.localStorage.setItem('pronouncationResult', JSON.stringify(resultJson));
-                phonogramResults?.updatePhonics(resultJson);
+                phonicResults?.updatePhonics(resultJson);
 
+            // In other cases that did not result with a speech recognition result, display the error.
+            } else if (result.reason === speechsdk.ResultReason.NoMatch) {
+                setDisplayText('Speech could not be recognized. Please try again');
+            } else if (result.reason === speechsdk.ResultReason.Canceled) {
+
+                var cancellation = speechsdk.CancellationDetails.fromResult(result);
+                setDisplayText(`CANCELED: Reason=${cancellation.reason}`);
+
+                if (cancellation.reason === speechsdk.CancellationReason.Error) {
+                    setDisplayText(`CANCELED: ErrorCode=${cancellation.ErrorCode}`);
+                    setDisplayText(`CANCELED: ErrorDetails=${cancellation.errorDetails}`);
+                    setDisplayText(`CANCELED: Did you update the subscription info?`);
+                }
             }
-
-            setMicrophoneOn(false);
         });
 
+        setMicrophoneState("off");
     }
 
     return <div>
         <div className='flex justify-center flex flex-col'>
 
-            {microphoneOn ? <p className='text-3xl'> SPEAKING </p> : <p className='text-3xl'> NOT SPEAKING </p>}
+            {microphoneState === "on" ? <p className='text-3xl'> SPEAKING </p> : <p className='text-3xl'> NOT SPEAKING </p>}
             {displayText}
-            {phonogramResults?.sortMyPhonogram().map((phonogram) => {
-                return <p> {phonogram[0]} : {phonogram[1]} </p>
-            })}
-            <ReferenceText text={referenceText}/>
-            <MicrophoneButton isMicrophoneOn={microphoneOn} whenClicked={speechToResults}/>
+            <ReferenceText text={referenceText} />
+            <MicrophoneButton isMicrophoneOn={microphoneState} whenClicked={speechToResults}/>
 
         </div>
 

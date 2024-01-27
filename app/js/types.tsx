@@ -9,6 +9,7 @@ export class Phonic_Results {
     constructor(mypPhonicScore?: {[key: string]: number}) {
         this.myPhonicScore = mypPhonicScore || {};
     }
+    
 
     // This function will take in a result for pronuciationAssessment and use that to update the myPhonicScore object
 
