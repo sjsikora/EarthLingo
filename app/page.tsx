@@ -18,7 +18,7 @@ const Page = () => {
         if (phonogramResults) {
             setPhonogramResults(new Phonic_Results(JSON.parse(phonogramResults)));
         }
-    });
+    }, []);
 
     return <div>
         <div className='p-10'>
