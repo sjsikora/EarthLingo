@@ -15,9 +15,7 @@ const SpeechHandler:React.FC<SpeechHandlerProps> = ({phonicResults}) => {
 
     const [referenceText, updateReferenceText] = useState("That quick beige fox jumped in the air over each thin dog. Look out, I shout, for he's foiled you again, creating chaos.");
     const [displayText, setDisplayText] = useState('INITIALIZED: ready to test speech...');
-    const [microphoneState, setMicrophoneState] = useState<"off" | "on" | "loading">( "off" );
-
-
+    const [microphoneisOn, setMicrophoneState] = useState(false);
 
     // This function will reconize speech from the user and updated pronouncationResult with the result.
     async function speechToResults() {
@@ -38,11 +36,11 @@ const SpeechHandler:React.FC<SpeechHandlerProps> = ({phonicResults}) => {
 
         pronunciationAssessmentConfig.applyTo(recognizer);
         
-        setMicrophoneState("on");
+        setMicrophoneState(true);
 
         recognizer.recognizeOnceAsync((result: speechsdk.SpeechRecognitionResult) => {
 
-            setMicrophoneState("loading");
+            setMicrophoneState(false);
 
             if(result.reason === speechsdk.ResultReason.RecognizedSpeech) {
 
@@ -65,17 +63,15 @@ const SpeechHandler:React.FC<SpeechHandlerProps> = ({phonicResults}) => {
                 }
             }
         });
-
-        setMicrophoneState("off");
     }
 
     return <div>
         <div className='flex justify-center flex flex-col'>
 
-            {microphoneState === "on" ? <p className='text-3xl'> SPEAKING </p> : <p className='text-3xl'> NOT SPEAKING </p>}
+            {microphoneisOn ? <p className='text-3xl'> SPEAKING </p> : <p className='text-3xl'> NOT SPEAKING </p>}
             {displayText}
             <ReferenceText text={referenceText} />
-            <MicrophoneButton isMicrophoneOn={microphoneState} whenClicked={speechToResults}/>
+            <MicrophoneButton isMicrophoneOn={microphoneisOn} whenClicked={speechToResults}/>
 
         </div>
 

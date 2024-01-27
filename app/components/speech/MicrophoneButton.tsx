@@ -1,7 +1,7 @@
 import React from 'react';
 
 type MicrophoneButtonProps = {
-    isMicrophoneOn: "on" | "off" | "loading";
+    isMicrophoneOn: boolean;
     whenClicked: () => void;
 };
 
@@ -17,17 +17,12 @@ const MicrophoneButton:React.FC<MicrophoneButtonProps> = ({isMicrophoneOn, whenC
         color: 'red'
     }
 
-    const microphoneLoading = {
-        fontSize: '5rem',
-        color: 'gray'
-    }
-
 
     return <div className='flex justify-center'>
         <button onClick={whenClicked} className='bg-gray-300 p-2 rounded-2xl'>
 
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-        <span className="material-symbols-outlined" style={isMicrophoneOn === "on" ? microphoneOn : isMicrophoneOn === "off" ? microphoneOff : microphoneLoading}> mic </span>
+        <span className="material-symbols-outlined" style={isMicrophoneOn ? microphoneOn : microphoneOff }> mic </span>
     </button>
     </div>
 }
