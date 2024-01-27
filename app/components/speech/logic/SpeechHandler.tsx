@@ -1,10 +1,10 @@
 "use client";
-import React, { useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import MicrophoneButton from '../MicrophoneButton';
 import { getTokenOrRefresh } from '../../../js/token_util';
 import * as speechsdk from "microsoft-cognitiveservices-speech-sdk"
 import ReferenceText from '../ReferenceText';
-import { Phonogram } from '../../../js/types';
+import { Phonogram, Phonic_Results} from '../../../js/types';
 
 type SpeechHandlerProps = {
     
@@ -15,7 +15,17 @@ const SpeechHandler:React.FC<SpeechHandlerProps> = () => {
     const [referenceText, updateReferenceText] = useState("That quick beige fox jumped in the air over each thin dog. Look out, I shout, for he's foiled you again, creating chaos.");
     const [displayText, setDisplayText] = useState('INITIALIZED: ready to test speech...');
     const [microphoneOn, setMicrophoneOn] = useState(false);
-    const [pronouncationResult, setPronouncationResult] = useState<Phonogram>();
+    const [phonogramResults, setPhonogramResults] = useState<Phonic_Results>();
+
+    // This function will check if myPhonicScore used in phonic_results is in local storage.
+    useEffect(() => {
+        const phonogramResults = window.localStorage.getItem('phonogramResults');
+        if (phonogramResults) {
+            setPhonogramResults(new Phonic_Results(JSON.parse(phonogramResults)));
+        } else {
+            setPhonogramResults(new Phonic_Results());
+        }
+    });
 
 
     // This function will reconize speech from the user and updated pronouncationResult with the result.
@@ -41,13 +51,13 @@ const SpeechHandler:React.FC<SpeechHandlerProps> = () => {
 
         recognizer.recognizeOnceAsync((result: speechsdk.SpeechRecognitionResult) => {
             if(result.reason === speechsdk.ResultReason.RecognizedSpeech) {
-                
+
+
 
                 var resultJson = JSON.parse(result.properties.getProperty(speechsdk.PropertyId.SpeechServiceResponse_JsonResult)) as Phonogram;
-                
-                console.log(resultJson);
-                
-                setPronouncationResult(resultJson);
+                window.localStorage.setItem('pronouncationResult', JSON.stringify(resultJson));
+                phonogramResults?.updatePhonics(resultJson);
+
             }
 
             setMicrophoneOn(false);
@@ -60,6 +70,9 @@ const SpeechHandler:React.FC<SpeechHandlerProps> = () => {
 
             {microphoneOn ? <p className='text-3xl'> SPEAKING </p> : <p className='text-3xl'> NOT SPEAKING </p>}
             {displayText}
+            {phonogramResults?.sortMyPhonogram().map((phonogram) => {
+                return <p> {phonogram[0]} : {phonogram[1]} </p>
+            })}
             <ReferenceText text={referenceText}/>
             <MicrophoneButton isMicrophoneOn={microphoneOn} whenClicked={speechToResults}/>
 

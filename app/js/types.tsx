@@ -6,13 +6,15 @@ export class Phonic_Results {
         [key: string]: number;
     }
 
-    constructor() {
-        this.myPhonicScore = {};
+    constructor(mypPhonicScore?: {[key: string]: number}) {
+        this.myPhonicScore = mypPhonicScore || {};
     }
 
     // This function will take in a result for pronuciationAssessment and use that to update the myPhonicScore object
 
     updatePhonics(result: Phonogram) {
+
+
         result.NBest.forEach(nbest => {
             nbest.Words.forEach(word => {
                 word.Phonemes.forEach(phoneme => {
@@ -31,6 +33,12 @@ export class Phonic_Results {
                 });
             });
         });
+
+        this.setLocalStorage();
+    }
+
+    setLocalStorage() {
+        window.localStorage.setItem('phonogramResults', JSON.stringify(this.myPhonicScore));
     }
 
     sortMyPhonogram(): [string, number][] {
