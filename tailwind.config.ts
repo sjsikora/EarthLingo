@@ -11,6 +11,10 @@ const config: Config = {
       fontFamily: {
         alien: ['var(--font-alien)'],
       },
+      colors: {
+        'gd-1': '#7B337C',
+        'gd-2': '#210435',
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
