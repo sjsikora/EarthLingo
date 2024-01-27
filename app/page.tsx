@@ -7,7 +7,7 @@ import Image from 'next/image';
 
 const Page = () => {
 
-  return <div>
+  return <div className='text-white'>
 
       <div className='p-10'>
     
@@ -15,7 +15,7 @@ const Page = () => {
             
             {/* TITLE PAGE */} 
             <div className='p-10'>
-                <div className='bg-white rounded-2xl'>
+                <div className='bg-gray-800 rounded-2xl'>
                     <p className='py-3 text-5xl font-alien flex justify-center'> JCKWBIFKKF SISKSKKD</p>
                     <p className='py-3 text-3xl flex justify-center'> Translation: Welcome Aliens!</p>
                 </div>
@@ -24,7 +24,7 @@ const Page = () => {
 
             {/* DESCRIPTION */} 
             <div className='p-10'>
-                <div className='bg-white rounded-2xl grid grid-cols-2 p-5'>
+                <div className='bg-gray-800 rounded-2xl grid grid-cols-2 p-5'>
                     
                     <div className='p-5 flex flex-col justify-between'>
                         <div>
@@ -42,8 +42,9 @@ const Page = () => {
                 </div>
             </div>
 
+
             <div className='p-10'>
-                <div className='bg-gray rounded-2xl'>
+                <div className='bg-gray-800 rounded-2xl'>
                     <SpeechHandler />
                 </div>
             </div>
