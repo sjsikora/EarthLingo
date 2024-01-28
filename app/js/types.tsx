@@ -1,6 +1,4 @@
-import * as speechsdk from 'microsoft-cognitiveservices-speech-sdk';
-
-export class Phonic_Results {
+export class PhoneticAssessmentResults {
 
     myPhonicScore: {
         [key: string]: {
@@ -48,7 +46,6 @@ export class Phonic_Results {
     }
 
     setLocalStorage() {
-        console.log(this.myPhonicScore);
         window.localStorage.setItem('phonogramResults', JSON.stringify(this.myPhonicScore));
     }
 

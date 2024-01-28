@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import SpeechHandler from './components/speech/SpeechHandler';
 import Image from 'next/image';
-import { Phonic_Results } from './js/types';
+import { PhoneticAssessmentResults } from './js/types';
 import PhonicGraph from './components/graph/PhonicData';
 import { Orbitron } from 'next/font/google'
 import './components/stars/Stars.css';
@@ -11,13 +11,14 @@ const orbitron = Orbitron({subsets: ['latin']});
 
 const Page = () => {
 
-    const [phonogramResults, setPhonogramResults] = useState<Phonic_Results>(new Phonic_Results());  
+    const [phoneticAssessmentResults, setPhoneticAssessmentResults] = useState<PhoneticAssessmentResults>(new PhoneticAssessmentResults());
+    const [psudeoValueForRerender, setPsudeoValueForRerender] = useState<number>(0);
 
     // This function will check if myPhonicScore used in phonic_results is in local storage.
     useEffect(() => {
         const phonogramResults = window.localStorage.getItem('phonogramResults');
         if (phonogramResults) {
-            setPhonogramResults(new Phonic_Results(JSON.parse(phonogramResults)));
+            setPhoneticAssessmentResults(new PhoneticAssessmentResults(JSON.parse(phonogramResults)));
         }
     }, []);
 
@@ -74,13 +75,13 @@ const Page = () => {
 
                 <div className='p-10'>
                     <div className='bg-white rounded-2xl'>
-                        <SpeechHandler phonicResults={phonogramResults}/>
+                        <SpeechHandler phonicResults={phoneticAssessmentResults} psudeoValueForRerender={psudeoValueForRerender} setPsudeoValueForRerender={setPsudeoValueForRerender} />
                     </div>
                 </div>
 
                 <div className='p-10'> 
                     <div className='bg-white rounded-2xl'>
-                        <PhonicGraph phonicResults={phonogramResults}/>
+                        <PhonicGraph phonicResults={phoneticAssessmentResults} />
                     </div>
                 </div>
             </div>

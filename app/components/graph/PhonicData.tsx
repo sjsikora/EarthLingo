@@ -1,16 +1,17 @@
-import { Phonic_Results } from '@/app/js/types';
-import React from 'react';
+import { PhoneticAssessmentResults } from '@/app/js/types';
+import React, { useEffect } from 'react';
 import DataBar from './DataBar';
 
 type PhonicGraphProps = {
-    phonicResults : Phonic_Results;
+    phonicResults: PhoneticAssessmentResults;
 };
 
 const PhonicGraph:React.FC<PhonicGraphProps> = ({phonicResults}) => {
 
+
     return <div className='p-5'>
         <div className='pt-3'>
-            <p className='text-5xl'> Your Phonogram Results </p>
+            <p className='text-5xl'> Your Overall Phonogram Results </p>
         </div>
         <div className='grid grid-cols-1 md:grid-cols-2 '>
             {phonicResults?.sortMyPhonogram().map((phonogram) => {

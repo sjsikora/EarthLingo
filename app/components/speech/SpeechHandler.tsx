@@ -4,14 +4,16 @@ import MicrophoneButton from './MicrophoneButton';
 import { getTokenOrRefresh } from '../../js/token_util';
 import * as speechsdk from "microsoft-cognitiveservices-speech-sdk"
 import ReferenceText from './ReferenceHandler';
-import { Phonogram, Phonic_Results} from '../../js/types';
+import { Phonogram, PhoneticAssessmentResults} from '../../js/types';
 
 type SpeechHandlerProps = {
-    phonicResults: Phonic_Results;
+    phonicResults: PhoneticAssessmentResults;
+    psudeoValueForRerender: number;
+    setPsudeoValueForRerender: React.Dispatch<React.SetStateAction<number>>;
     
 };
 
-const SpeechHandler:React.FC<SpeechHandlerProps> = ({phonicResults}) => {
+const SpeechHandler:React.FC<SpeechHandlerProps> = ({phonicResults, psudeoValueForRerender, setPsudeoValueForRerender}) => {
 
     const [referenceText, setReferenceText] = useState("That quick beige fox jumped in the air over each thin dog. Look out, I shout, for he's foiled you again, creating chaos.");
     const [displayText, setDisplayText] = useState('INITIALIZED: ready to test speech...');
@@ -47,6 +49,7 @@ const SpeechHandler:React.FC<SpeechHandlerProps> = ({phonicResults}) => {
                 var resultJson = JSON.parse(result.properties.getProperty(speechsdk.PropertyId.SpeechServiceResponse_JsonResult)) as Phonogram;
                 console.log(resultJson);
                 phonicResults.updatePhonics(resultJson);
+                setPsudeoValueForRerender(psudeoValueForRerender + 1);
 
             // In other cases that did not result with a speech recognition result, display the error.
             } else if (result.reason === speechsdk.ResultReason.NoMatch) {
@@ -63,6 +66,7 @@ const SpeechHandler:React.FC<SpeechHandlerProps> = ({phonicResults}) => {
                 }
             }
         });
+
     }
 
     return <div>

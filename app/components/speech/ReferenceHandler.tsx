@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReferenceButton from './ReferenceButton';
 
 type ReferenceTextProps = {
@@ -10,6 +10,11 @@ type ReferenceTextProps = {
 const ReferenceText:React.FC<ReferenceTextProps> = ({text}) => {
 
     const[difficulty, setDifficulty] = useState<string>('easy');
+    const[index, setIndex] = useState({easy: 0, medium: 0, hard: 0});
+
+    useEffect(() => {
+        
+    }, [])
     
     return <div >
         <div className='flex justify-center'>
