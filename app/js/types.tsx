@@ -1,3 +1,5 @@
+import { ConsoleLoggingListener } from "microsoft-cognitiveservices-speech-sdk/distrib/lib/src/common.browser/ConsoleLoggingListener";
+
 export class PhoneticAssessmentResults {
 
     myPhonicScore: {
@@ -6,6 +8,8 @@ export class PhoneticAssessmentResults {
             count: number;
         }
     }
+
+    latestResults: PhoneticAssessmentLatestResults | undefined;
 
     constructor(myPhonicScore?: {
         [key: string]: {
@@ -20,12 +24,41 @@ export class PhoneticAssessmentResults {
     // This function will take in a result for pronuciationAssessment and use that to update the myPhonicScore object
 
     async updatePhonics(result: Phonogram) {
-        console.log("I am here");
 
+        let totalScore: number = 0;
+        let missprouncedWords: string[] = [];
+
+        let worstWord: string = '';
+        let worstScore: number = 100;
+        let worstWordPhonemes: string[] = [];
+        
         result.NBest.forEach(nbest => {
+            totalScore = Math.round(nbest.PronunciationAssessment.AccuracyScore * 100) / 100;
+
             nbest.Words.forEach(word => {
+
+                let thisWordIstheWorstScore = false;
+
+                const errorType = word.PronunciationAssessment.ErrorType;
+                const tempScore = word.PronunciationAssessment.AccuracyScore;
+                const wordString = word.Word;
+
+                console.log("Temp Score: " + tempScore);
+                console.log("Worst Score: " + worstScore);
+
+                if (tempScore < worstScore) {
+                    worstScore = tempScore;
+                    worstWord = wordString
+                    thisWordIstheWorstScore = true;
+                    worstWordPhonemes = [];
+                }
+
+                if (errorType === "Mispronunciation") missprouncedWords.push(word.Word);
+
                 word.Phonemes.forEach(phoneme => {
+
                     const phonemeName = phoneme.Phoneme;
+                    if(thisWordIstheWorstScore) worstWordPhonemes.push(phonemeName);
                     const accuracyScore = phoneme.PronunciationAssessment.AccuracyScore;
                     
                     //Case phoneme is present
@@ -42,6 +75,16 @@ export class PhoneticAssessmentResults {
             });
         });
 
+        this.latestResults = {
+            totalScore: totalScore,
+            worstWord: {
+                word: worstWord,
+                phonemes: worstWordPhonemes,
+                score: worstScore
+            },
+            missprouncedWords: missprouncedWords
+        }
+
         this.setLocalStorage();
     }
 
@@ -56,11 +99,15 @@ export class PhoneticAssessmentResults {
         const sortedPhonogram = Object.entries(this.myPhonicScore).sort((a, b) => a[1].score - b[1].score);
         return sortedPhonogram;
     }
+
+    getMyLatestResults(): PhoneticAssessmentLatestResults | undefined {
+        return this.latestResults;
+    }
 }
 
 interface PronunciationAssessment {
     AccuracyScore: number;
-    ErrorType?: string;
+    ErrorType: string;
     FluencyScore?: number;
     CompletenessScore?: number;
     PronScore?: number;
@@ -105,4 +152,14 @@ export interface Phonogram {
     DisplayText: string;
     SNR: number;
     NBest: NBest[];
+}
+
+export interface PhoneticAssessmentLatestResults {
+    totalScore: number;
+    worstWord: {
+        word: string;
+        phonemes: string[];
+        score: number;
+    };
+    missprouncedWords: string[];
 }

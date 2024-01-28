@@ -3,11 +3,12 @@ import React, { useEffect, useState } from 'react';
 import SpeechHandler from './components/speech/SpeechHandler';
 import Image from 'next/image';
 import { PhoneticAssessmentResults } from './js/types';
-import PhonicGraph from './components/graph/PhonicData';
+import PhonicGraph from './components/overall/PhonicData';
 import { Orbitron } from 'next/font/google'
 import './components/stars/Stars.css';
+import LatestResults from './components/latest/LatestResults';
 
-const orbitron = Orbitron({subsets: ['latin']});
+const orbitron = Orbitron({ subsets: ['latin'] });
 
 const Page = () => {
 
@@ -46,7 +47,7 @@ const Page = () => {
                         <p className='py-3 text-5xl text-white font-alien'> JCKWBIFKKF SISKSKKD</p>
                         <div className={`py-3 text-3xl text-white ${orbitron.className}`}>
                             TRANSLATION: Welcome Aliens!
-                             
+
                         </div>
                     </div>
                     <div></div>
@@ -73,15 +74,31 @@ const Page = () => {
                     </div>
                 </div>
 
-
+                {/* SPEECH HANDLER */}
                 <div className='p-10'>
                     <div className='bg-white rounded-2xl'>
                         <SpeechHandler phonicResults={phoneticAssessmentResults} psudeoValueForRerender={psudeoValueForRerender} setPsudeoValueForRerender={setPsudeoValueForRerender} />
                     </div>
                 </div>
 
-                <div className='p-10'> 
+                {/* LASTEST RESULTS */}
+                <div className='p-10'>
                     <div className='bg-white rounded-2xl'>
+                        <div className='p-5'>
+                            <div className='py-3'>
+                                <p className='text-4xl'> Your Latest Results </p>
+                            </div>
+                            <div>
+                                <LatestResults phonicResults={phoneticAssessmentResults} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* OVERALL PHONIC RESULTS */}
+                <div className='p-10'>
+                    <div className='bg-white rounded-2xl'>
+
                         <PhonicGraph phonicResults={phoneticAssessmentResults} />
                     </div>
                 </div>

@@ -8,6 +8,7 @@ type MicroPhoneAndReferenceHandlerProps = {
 
     // Microphone Props
     isMicrophoneOn: boolean;
+    displayText: string;
     whenMicrophoneClicked: () => void;
 
     // ReferenceText Props
@@ -16,7 +17,7 @@ type MicroPhoneAndReferenceHandlerProps = {
     
 };
 
-const MicroPhoneAndReferenceHandler:React.FC<MicroPhoneAndReferenceHandlerProps> = ({isMicrophoneOn, whenMicrophoneClicked, referenceText, setReferenceText }) => {
+const MicroPhoneAndReferenceHandler:React.FC<MicroPhoneAndReferenceHandlerProps> = ({isMicrophoneOn, displayText, whenMicrophoneClicked, referenceText, setReferenceText }) => {
 
     const[difficulty, setDifficulty] = useState<string>('medium');
     const[difficultyIndex, setDifficultyIndex] = useState<{easy : number, medium : number, hard : number}>({easy: 0, medium: 0, hard: 0});
@@ -57,7 +58,9 @@ const MicroPhoneAndReferenceHandler:React.FC<MicroPhoneAndReferenceHandlerProps>
 
             <div className='pb-10 w-1/3'>
                 <p className='text-3xl flex justify-center'> {isMicrophoneOn ? 'SPEAKING' : 'NOT SPEAKING'}</p>
+                
                 <MicrophoneButton isMicrophoneOn={isMicrophoneOn} whenClicked={whenMicrophoneClicked} />
+                <p className='pt-1 flex justify-center text-rose-600'> {displayText}</p>
             </div>
         </div>
     </div>

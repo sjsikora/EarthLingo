@@ -16,11 +16,16 @@ const SpeechHandler:React.FC<SpeechHandlerProps> = ({phonicResults, psudeoValueF
 
     const [referenceText, setReferenceText] = useState("That quick beige fox jumped in the air over each thin dog. Look out, I shout, for he's foiled you again, creating chaos.");
 
-    const [displayText, setDisplayText] = useState('INITIALIZED: ready to test speech...');
+    const [displayText, setDisplayText] = useState('');
     const [microphoneisOn, setMicrophoneState] = useState(false);
 
     // This function will reconize speech from the user and updated pronouncationResult with the result.
     async function speechToResults() {
+        
+        if(microphoneisOn) {
+            setMicrophoneState(false);
+            return;
+        }
       
         const tokenObj = await getTokenOrRefresh();
         const speechConfig = speechsdk.SpeechConfig.fromAuthorizationToken(tokenObj.authToken, tokenObj.region);
@@ -49,7 +54,6 @@ const SpeechHandler:React.FC<SpeechHandlerProps> = ({phonicResults, psudeoValueF
                 var resultJson = JSON.parse(result.properties.getProperty(speechsdk.PropertyId.SpeechServiceResponse_JsonResult)) as Phonogram;
                 console.log(resultJson);
                 phonicResults.updatePhonics(resultJson);
-                setPsudeoValueForRerender(psudeoValueForRerender + 1);
 
             // In other cases that did not result with a speech recognition result, display the error.
             } else if (result.reason === speechsdk.ResultReason.NoMatch) {
@@ -67,11 +71,13 @@ const SpeechHandler:React.FC<SpeechHandlerProps> = ({phonicResults, psudeoValueF
             }
         });
 
+        setPsudeoValueForRerender(psudeoValueForRerender + 1);
     }
 
     return <div>
         <MicroPhoneAndReferenceHandler
             isMicrophoneOn={microphoneisOn}
+            displayText={displayText}
             whenMicrophoneClicked={speechToResults}
             referenceText={referenceText}
             setReferenceText={setReferenceText}
