@@ -53,7 +53,7 @@ export class PhoneticAssessmentResults {
         score: number;
         count: number;
     }][] {
-        const sortedPhonogram = Object.entries(this.myPhonicScore).sort((a, b) => b[1].score - a[1].score);
+        const sortedPhonogram = Object.entries(this.myPhonicScore).sort((a, b) => a[1].score - b[1].score);
         return sortedPhonogram;
     }
 }

@@ -12,6 +12,7 @@ const orbitron = Orbitron({subsets: ['latin']});
 const Page = () => {
 
     const [phoneticAssessmentResults, setPhoneticAssessmentResults] = useState<PhoneticAssessmentResults>(new PhoneticAssessmentResults());
+    // This value is a bit weird, but there is no time to restructure. When SpeechHandler updates the phoneticAssessmentResults, it will update this value to rerender the PhonicGraph
     const [psudeoValueForRerender, setPsudeoValueForRerender] = useState<number>(0);
 
     // This function will check if myPhonicScore used in phonic_results is in local storage.

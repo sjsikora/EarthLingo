@@ -1,10 +1,9 @@
 "use client";
 import React, { use, useEffect, useState } from 'react';
-import MicrophoneButton from './MicrophoneButton';
 import { getTokenOrRefresh } from '../../js/token_util';
 import * as speechsdk from "microsoft-cognitiveservices-speech-sdk"
-import ReferenceText from './ReferenceHandler';
 import { Phonogram, PhoneticAssessmentResults} from '../../js/types';
+import MicroPhoneAndReferenceHandler from './MicrophoneAndReferenceHandler';
 
 type SpeechHandlerProps = {
     phonicResults: PhoneticAssessmentResults;
@@ -16,6 +15,7 @@ type SpeechHandlerProps = {
 const SpeechHandler:React.FC<SpeechHandlerProps> = ({phonicResults, psudeoValueForRerender, setPsudeoValueForRerender}) => {
 
     const [referenceText, setReferenceText] = useState("That quick beige fox jumped in the air over each thin dog. Look out, I shout, for he's foiled you again, creating chaos.");
+
     const [displayText, setDisplayText] = useState('INITIALIZED: ready to test speech...');
     const [microphoneisOn, setMicrophoneState] = useState(false);
 
@@ -70,16 +70,12 @@ const SpeechHandler:React.FC<SpeechHandlerProps> = ({phonicResults, psudeoValueF
     }
 
     return <div>
-        <div className='flex justify-center flex flex-col'>
-
-            <ReferenceText text={referenceText} setReferenceText={setReferenceText} />
-            {microphoneisOn ? <p className='text-3xl'> SPEAKING </p> : <p className='text-3xl'> NOT SPEAKING </p>}
-            {displayText}
-            <MicrophoneButton isMicrophoneOn={microphoneisOn} whenClicked={speechToResults}/>
-
-        </div>
-
-
+        <MicroPhoneAndReferenceHandler
+            isMicrophoneOn={microphoneisOn}
+            whenMicrophoneClicked={speechToResults}
+            referenceText={referenceText}
+            setReferenceText={setReferenceText}
+        />
     </div>
 }
 export default SpeechHandler;
