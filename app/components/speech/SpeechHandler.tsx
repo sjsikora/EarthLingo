@@ -68,9 +68,9 @@ const SpeechHandler:React.FC<SpeechHandlerProps> = ({phonicResults}) => {
     return <div>
         <div className='flex justify-center flex flex-col'>
 
+            <ReferenceText text={referenceText} setReferenceText={setReferenceText} />
             {microphoneisOn ? <p className='text-3xl'> SPEAKING </p> : <p className='text-3xl'> NOT SPEAKING </p>}
             {displayText}
-            <ReferenceText text={referenceText} setReferenceText={setReferenceText} />
             <MicrophoneButton isMicrophoneOn={microphoneisOn} whenClicked={speechToResults}/>
 
         </div>
