@@ -4,6 +4,7 @@ import SpeechHandler from './components/speech/logic/SpeechHandler';
 import Image from 'next/image';
 import { Phonic_Results } from './js/types';
 import PhonicGraph from './components/speech/graph/PhonicData';
+import './components/stars/Stars.css';
 
 
 // Idea. Have background have twinkling stars
@@ -20,17 +21,30 @@ const Page = () => {
         }
     }, []);
 
-    return <div>
+    // Amazing twinkling star effect from https://tailwindcomponents.com/component/landing-page-with-twinkling-stars
+    useEffect(() => {
+        for (let i = 0; i < 100; i++) {
+            const star = document.createElement('div');
+            star.className = 'star m-0';
+            star.style.animation = `twinkle ${Math.random() * 5 + 5}s linear ${Math.random() * 1 + 1}s infinite`;
+            star.style.top = `${Math.random() * window.innerHeight}px`;
+            star.style.left = `${Math.random() * window.innerWidth}px`;
+            document.querySelector('.homescreen')?.appendChild(star);
+        }
+    }, []);
+
+    return <div className='homescreen'>
         <div className='p-10'>
 
             <div className='flex justify-center rounded-xl flex flex-col'>
 
                 {/* TITLE PAGE */}
-                <div className='p-10'>
-                    <div className='bg-white rounded-2xl'>
-                        <p className='py-3 text-5xl font-alien flex justify-center'> JCKWBIFKKF SISKSKKD</p>
-                        <p className='py-3 text-3xl flex justify-center'> Translation: Welcome Aliens!</p>
+                <div className='p-10 h-1/2 flex flex-cols'>
+                    <div className=''>
+                        <p className='py-3 text-5xl text-white font-alien'> JCKWBIFKKF SISKSKKD</p>
+                        <p className='py-3 text-3xl text-white'> Translation: Welcome Aliens!</p>
                     </div>
+                    <div></div>
                 </div>
 
 
