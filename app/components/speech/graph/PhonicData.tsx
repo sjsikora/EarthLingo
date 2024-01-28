@@ -14,8 +14,8 @@ const PhonicGraph:React.FC<PhonicGraphProps> = ({phonicResults}) => {
         </div>
         <div className='grid grid-cols-1 md:grid-cols-2 '>
             {phonicResults?.sortMyPhonogram().map((phonogram) => {
-                if (phonogram[1] > 99) return;
-                return <DataBar score={phonogram[1]} key={phonogram[0]} phoneme={phonogram[0]}/>
+                if (phonogram[1].score > 99) return;
+                return <DataBar score={phonogram[1].score} count={phonogram[1].count} key={phonogram[0]} phoneme={phonogram[0]}/>
             })}
 
         </div>

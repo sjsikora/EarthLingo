@@ -45,8 +45,8 @@ const SpeechHandler:React.FC<SpeechHandlerProps> = ({phonicResults}) => {
             if(result.reason === speechsdk.ResultReason.RecognizedSpeech) {
 
                 var resultJson = JSON.parse(result.properties.getProperty(speechsdk.PropertyId.SpeechServiceResponse_JsonResult)) as Phonogram;
-                window.localStorage.setItem('pronouncationResult', JSON.stringify(resultJson));
-                phonicResults?.updatePhonics(resultJson);
+                console.log(resultJson);
+                phonicResults.updatePhonics(resultJson);
 
             // In other cases that did not result with a speech recognition result, display the error.
             } else if (result.reason === speechsdk.ResultReason.NoMatch) {

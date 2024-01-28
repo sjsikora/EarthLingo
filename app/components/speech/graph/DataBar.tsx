@@ -3,9 +3,10 @@ import React from 'react';
 type DataBarProps = {
     score : number;
     phoneme : string;
+    count : number;
 };
 
-const DataBar:React.FC<DataBarProps> = ({score, phoneme}) => {
+const DataBar:React.FC<DataBarProps> = ({score, phoneme, count}) => {
     
     return <div className='text-5xl p-3 flex'>
         <div className='shadow-xl border-2 flex rounded-3xl'>
