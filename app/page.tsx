@@ -87,6 +87,7 @@ const Page = () => {
                         <div className='p-5'>
                             <div className='py-3'>
                                 <p className='text-4xl'> Your Latest Results </p>
+
                             </div>
                             <div>
                                 <LatestResults phonicResults={phoneticAssessmentResults} psudeoValueForRerender={psudeoValueForRerender} />
@@ -99,7 +100,7 @@ const Page = () => {
                 <div className='p-10'>
                     <div className='bg-white rounded-2xl'>
 
-                        <PhonicGraph phonicResults={phoneticAssessmentResults} psudeoValueForRerender={psudeoValueForRerender} />
+                        <PhonicGraph phonicResults={phoneticAssessmentResults} psudeoValueForRerender={psudeoValueForRerender} setPhonicResults={setPhoneticAssessmentResults} />
                     </div>
                 </div>
             </div>
