@@ -18,15 +18,19 @@ const SpeechHandler:React.FC<SpeechHandlerProps> = ({phonicResults, psudeoValueF
 
     const [displayText, setDisplayText] = useState('');
     const [microphoneisOn, setMicrophoneState] = useState(false);
+    const [doWeHaveResults, setDoWeHaveResults] = useState(true);
 
     // This function will reconize speech from the user and updated pronouncationResult with the result.
     async function speechToResults() {
         
         // People like pressing the microphone before we are done.
-        if(microphoneisOn) {
+        if(microphoneisOn || !doWeHaveResults) {
             setMicrophoneState(false);
+            setDisplayText('Reconized. Please wait for the results.')
             return;
         }
+
+        setDoWeHaveResults(false);
       
         const tokenObj = await getTokenOrRefresh();
         const speechConfig = speechsdk.SpeechConfig.fromAuthorizationToken(tokenObj.authToken, tokenObj.region);
@@ -46,6 +50,10 @@ const SpeechHandler:React.FC<SpeechHandlerProps> = ({phonicResults, psudeoValueF
         
         setMicrophoneState(true);
 
+        recognizer.recognizing = (s, e) => {
+            setDisplayText("Recognizing...")
+        }
+
         recognizer.recognizeOnceAsync((result: speechsdk.SpeechRecognitionResult) => {
 
             setMicrophoneState(false);
@@ -56,10 +64,12 @@ const SpeechHandler:React.FC<SpeechHandlerProps> = ({phonicResults, psudeoValueF
                 console.log(resultJson);
                 phonicResults.updatePhonics(resultJson);
                 setPsudeoValueForRerender(psudeoValueForRerender + 1);
+                setDisplayText(''); // Clear the display text.
+                setDoWeHaveResults(true);
 
             // In other cases that did not result with a speech recognition result, display the error.
             } else if (result.reason === speechsdk.ResultReason.NoMatch) {
-                setDisplayText('Speech could not be recognized. Please try again');
+                setDisplayText('ERROR: Speech could not be recognized. Please try again');
             } else if (result.reason === speechsdk.ResultReason.Canceled) {
 
                 var cancellation = speechsdk.CancellationDetails.fromResult(result);
@@ -74,6 +84,8 @@ const SpeechHandler:React.FC<SpeechHandlerProps> = ({phonicResults, psudeoValueF
         });
 
         
+
+        
     }
 
     return <div>
@@ -84,6 +96,7 @@ const SpeechHandler:React.FC<SpeechHandlerProps> = ({phonicResults, psudeoValueF
             referenceText={referenceText}
             setReferenceText={setReferenceText}
         />
+        <p></p>
     </div>
 }
 export default SpeechHandler;

@@ -20,7 +20,7 @@ type MicroPhoneAndReferenceHandlerProps = {
 const MicroPhoneAndReferenceHandler:React.FC<MicroPhoneAndReferenceHandlerProps> = ({isMicrophoneOn, displayText, whenMicrophoneClicked, referenceText, setReferenceText }) => {
 
     const[difficulty, setDifficulty] = useState<string>('medium');
-    const[difficultyIndex, setDifficultyIndex] = useState<{easy : number, medium : number, hard : number}>({easy: 0, medium: 0, hard: 0});
+    const[difficultyIndex, setDifficultyIndex] = useState<{easy : number, medium : number, hard : number, nonsense: number}>({easy: 0, medium: 0, hard: 0, nonsense: 0});
 
     useEffect(() => {
         const difficultyIndex = window.localStorage.getItem('difficultyIndex');
@@ -29,7 +29,7 @@ const MicroPhoneAndReferenceHandler:React.FC<MicroPhoneAndReferenceHandlerProps>
         }
     }, [])
 
-    function onReferenceButtonClick(difficulty: "easy" | "medium" | "hard" | "custom") {
+    function onReferenceButtonClick(difficulty: "easy" | "medium" | "hard" | "nonsense" | "custom") {
         setDifficulty(difficulty);
 
         if(difficulty === 'custom') return;
@@ -43,10 +43,11 @@ const MicroPhoneAndReferenceHandler:React.FC<MicroPhoneAndReferenceHandlerProps>
 
     
     return <div>
-        <div className='flex justify-center'>
+        <div className='flex grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 px-10'>
                 <ReferenceButton selected={difficulty === 'easy'} name='Easy' onClick={() => onReferenceButtonClick('easy')}/>
                 <ReferenceButton selected={difficulty === 'medium'} name='Medium' onClick={() => onReferenceButtonClick('medium')}/>
                 <ReferenceButton selected={difficulty === 'hard'} name='Hard' onClick={() => onReferenceButtonClick('hard')}/>
+                <ReferenceButton selected={difficulty === 'nonsense'} name='Nonsense' onClick={() => onReferenceButtonClick('nonsense')}/>
                 <ReferenceButton selected={difficulty === 'custom'} name='Custom' onClick={() => setDifficulty('custom')}/>
         </div>
         <div className='px-10 py-3 flex'>
@@ -67,7 +68,7 @@ const MicroPhoneAndReferenceHandler:React.FC<MicroPhoneAndReferenceHandlerProps>
             <div className='pb-10 w-1/3 grid grid-cols-1 content-center'>
                 
                 <MicrophoneButton isMicrophoneOn={isMicrophoneOn} whenClicked={whenMicrophoneClicked} />
-                <p className='pt-1 flex justify-center text-rose-600'> {displayText}</p>
+                <p className='pt-1 flex justify-center'> {displayText}</p>
             </div>
         </div>
     </div>
