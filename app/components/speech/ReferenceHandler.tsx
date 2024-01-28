@@ -2,6 +2,7 @@ import React from 'react';
 
 type ReferenceTextProps = {
     text: string;
+    setReferenceText: React.Dispatch<React.SetStateAction<string>>;
 
 };
 

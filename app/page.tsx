@@ -1,13 +1,13 @@
 "use client";
 import React, { useEffect, useState } from 'react';
-import SpeechHandler from './components/speech/logic/SpeechHandler';
+import SpeechHandler from './components/speech/SpeechHandler';
 import Image from 'next/image';
 import { Phonic_Results } from './js/types';
-import PhonicGraph from './components/speech/graph/PhonicData';
+import PhonicGraph from './components/graph/PhonicData';
+import { Orbitron } from 'next/font/google'
 import './components/stars/Stars.css';
 
-
-// Idea. Have background have twinkling stars
+const orbitron = Orbitron({subsets: ['latin']});
 
 const Page = () => {
 
@@ -42,7 +42,10 @@ const Page = () => {
                 <div className='p-10 h-1/2 flex flex-cols'>
                     <div className=''>
                         <p className='py-3 text-5xl text-white font-alien'> JCKWBIFKKF SISKSKKD</p>
-                        <p className='py-3 text-3xl text-white'> Translation: Welcome Aliens!</p>
+                        <div className={`py-3 text-3xl text-white ${orbitron.className}`}>
+                            TRANSLATION: Welcome Aliens!
+                             
+                        </div>
                     </div>
                     <div></div>
                 </div>
@@ -55,7 +58,7 @@ const Page = () => {
                         <div className='p-5 flex flex-col justify-between'>
                             <div>
                                 <p className='text-3xl font-alien'> LCMEIWNV </p>
-                                <p className='text-lg'> Alien vocal cords are unlike humans which means many aliens have trouble speaking Earthlanguage. So, we have made this site to help you on your path to speaking Earthlanguage fluently. Input some sample text below,
+                                <p className='text-lg'> Alien vocal cords are unlike humans which means many aliens have trouble speaking Earthlanguage. So, we have made this site to help you on your path to speaking fluently! Input some sample text below,
                                     or generate some random text, hit the microphone and start reading! We will grade you on your ability to pronounce Earth phonics. </p>
                             </div>
                             <p className='text-sm p-2'> Earth is home to over 10 billion humans with 2 billion more on their planet Mars. Earth is still primative, but is one of the top tourist destinations among the galaxy. </p>

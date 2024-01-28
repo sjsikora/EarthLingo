@@ -1,10 +1,10 @@
 "use client";
 import React, { use, useEffect, useState } from 'react';
-import MicrophoneButton from '../MicrophoneButton';
-import { getTokenOrRefresh } from '../../../js/token_util';
+import MicrophoneButton from './MicrophoneButton';
+import { getTokenOrRefresh } from '../../js/token_util';
 import * as speechsdk from "microsoft-cognitiveservices-speech-sdk"
-import ReferenceText from '../ReferenceText';
-import { Phonogram, Phonic_Results} from '../../../js/types';
+import ReferenceText from './ReferenceHandler';
+import { Phonogram, Phonic_Results} from '../../js/types';
 
 type SpeechHandlerProps = {
     phonicResults: Phonic_Results;
@@ -13,7 +13,7 @@ type SpeechHandlerProps = {
 
 const SpeechHandler:React.FC<SpeechHandlerProps> = ({phonicResults}) => {
 
-    const [referenceText, updateReferenceText] = useState("That quick beige fox jumped in the air over each thin dog. Look out, I shout, for he's foiled you again, creating chaos.");
+    const [referenceText, setReferenceText] = useState("That quick beige fox jumped in the air over each thin dog. Look out, I shout, for he's foiled you again, creating chaos.");
     const [displayText, setDisplayText] = useState('INITIALIZED: ready to test speech...');
     const [microphoneisOn, setMicrophoneState] = useState(false);
 
@@ -70,7 +70,7 @@ const SpeechHandler:React.FC<SpeechHandlerProps> = ({phonicResults}) => {
 
             {microphoneisOn ? <p className='text-3xl'> SPEAKING </p> : <p className='text-3xl'> NOT SPEAKING </p>}
             {displayText}
-            <ReferenceText text={referenceText} />
+            <ReferenceText text={referenceText} setReferenceText={setReferenceText} />
             <MicrophoneButton isMicrophoneOn={microphoneisOn} whenClicked={speechToResults}/>
 
         </div>
