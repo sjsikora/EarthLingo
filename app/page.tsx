@@ -65,8 +65,8 @@ const Page = () => {
                         </div>
 
 
-                        <div className='flex justify-center'>
-                            <Image src='https://climatekids.nasa.gov/why-earth/earth.jpg' width={400} height={400} alt='Picture of the earth' />
+                        <div className='flex justify-center relative item-detail'>
+                            <Image src='https://climatekids.nasa.gov/why-earth/earth.jpg' layout={'fill'} objectFit={'contain'} alt='Picture of the earth' />
                         </div>
                     </div>
                 </div>

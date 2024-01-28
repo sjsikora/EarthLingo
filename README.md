@@ -12,4 +12,4 @@ Thank you to the following open source site whose code I have used within this p
 - [AzureSpeechReactSample](https://github.com/Azure-Samples/AzureSpeechReactSample) for logic with speech SDK and token handling.
 - [Icesofty](https://tailwindcomponents.com/component/landing-page-with-twinkling-stars) for the amazing twinkling star effect.
 
-Made with React, Next.js, Tailwind, and Microsoft Azure.
+Made with React, Next.js, Typescript, Tailwind, and Microsoft Azure AI.
