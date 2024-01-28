@@ -4,6 +4,9 @@ Alien vocal cords are unlike humans which means many aliens have trouble speakin
 
 This project was a solo endeavour for BC Hacks 5.0.
 
+Want to see a video of it in action? Right here:
+https://www.loom.com/share/78c6fc9b5fae452eb33c86027acc5e62
+
 Made with React, Next.js, Typescript, Tailwind, and Microsoft Azure AI.
 
 ## Open Source Acklowngments
