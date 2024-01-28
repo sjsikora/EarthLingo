@@ -29,8 +29,10 @@ const MicroPhoneAndReferenceHandler:React.FC<MicroPhoneAndReferenceHandlerProps>
         }
     }, [])
 
-    function onReferenceButtonClick(difficulty: "easy" | "medium" | "hard") {
+    function onReferenceButtonClick(difficulty: "easy" | "medium" | "hard" | "custom") {
         setDifficulty(difficulty);
+
+        if(difficulty === 'custom') return;
         
         const index = (difficultyIndex[difficulty] + 1) % sentences[difficulty].length;
         setReferenceText(sentences[difficulty][index]);
@@ -47,17 +49,22 @@ const MicroPhoneAndReferenceHandler:React.FC<MicroPhoneAndReferenceHandlerProps>
                 <ReferenceButton selected={difficulty === 'hard'} name='Hard' onClick={() => onReferenceButtonClick('hard')}/>
                 <ReferenceButton selected={difficulty === 'custom'} name='Custom' onClick={() => setDifficulty('custom')}/>
         </div>
-        <div className='px-10 flex'>
+        <div className='px-10 py-3 flex'>
 
             <div className='p-3 w-2/3'>
                 <div className="text-2xl"> Try Saying...</div>
+                {difficulty === 'custom' ? <div className='p-2 border-2 text-slate-600 text-3xl'>
+                    <textarea className='w-full h-40' value={referenceText} onChange={(e) => setReferenceText(e.target.value)} />
+                    
+                </div>:
                 <div className='p-2 border-2 text-slate-600 text-3xl'>
                     {referenceText}
-                </div>
+                </div>}
+
+
             </div>
 
-            <div className='pb-10 w-1/3'>
-                <p className='text-3xl flex justify-center'> {isMicrophoneOn ? 'SPEAKING' : 'NOT SPEAKING'}</p>
+            <div className='pb-10 w-1/3 grid grid-cols-1 content-center'>
                 
                 <MicrophoneButton isMicrophoneOn={isMicrophoneOn} whenClicked={whenMicrophoneClicked} />
                 <p className='pt-1 flex justify-center text-rose-600'> {displayText}</p>

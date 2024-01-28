@@ -43,9 +43,6 @@ export class PhoneticAssessmentResults {
                 const tempScore = word.PronunciationAssessment.AccuracyScore;
                 const wordString = word.Word;
 
-                console.log("Temp Score: " + tempScore);
-                console.log("Worst Score: " + worstScore);
-
                 if (tempScore < worstScore) {
                     worstScore = tempScore;
                     worstWord = wordString

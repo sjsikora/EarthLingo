@@ -89,7 +89,7 @@ const Page = () => {
                                 <p className='text-4xl'> Your Latest Results </p>
                             </div>
                             <div>
-                                <LatestResults phonicResults={phoneticAssessmentResults} />
+                                <LatestResults phonicResults={phoneticAssessmentResults} psudeoValueForRerender={psudeoValueForRerender} />
                             </div>
                         </div>
                     </div>
@@ -99,7 +99,7 @@ const Page = () => {
                 <div className='p-10'>
                     <div className='bg-white rounded-2xl'>
 
-                        <PhonicGraph phonicResults={phoneticAssessmentResults} />
+                        <PhonicGraph phonicResults={phoneticAssessmentResults} psudeoValueForRerender={psudeoValueForRerender} />
                     </div>
                 </div>
             </div>
