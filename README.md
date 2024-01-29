@@ -2,7 +2,9 @@
 
 <img width="1322" alt="Screen Shot 2024-01-28 at 11 05 38 AM 1" src="https://github.com/sjsikora/EarthLingo/assets/20007305/2c3628ac-5f76-452c-b20d-a3d4922cedcb">
 
-Alien vocal cords are unlike humans which means many aliens have trouble speaking Earthlanguage. So, we have made this site to help you on your path to speaking fluently! Input some sample text, or generate some random text, hit the microphone and start reading! We will then grade you on your ability to pronounce Earth phonetics.
+As a kid, I struggled with pronunciation. Part of the difficulty was because when I would approach a new word, I would not break it down into its parts; I would memorize how the word sounds. In other words, I never understood the concept of phonics. Yet, in high school I was lucky enough to have a speech tutor. From the ground up, I got instant feedback on a word's phonics and what my weak points were. With help from her, I could approach new words with more confidence. This inspired me to create this site. Because not only aliens but humans will need help with phonics.
+
+Pick or customize your sentence, and then read it aloud. EarthLingo will give you feedback on your overall pronunciation of the sentence, highlight any mispronounced words, and help you break down your worst pronunciation. Additionally, for every sentence you read, you are scored on individual phonics so you can understand your weak points.
 
 This project was a solo endeavour for BC Hacks 5.0.
 
