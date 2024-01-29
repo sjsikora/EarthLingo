@@ -1,5 +1,7 @@
 # Welcome to Earthlingo
 
+<img width="1322" alt="Screen Shot 2024-01-28 at 11 05 38 AM 1" src="https://github.com/sjsikora/EarthLingo/assets/20007305/2c3628ac-5f76-452c-b20d-a3d4922cedcb">
+
 Alien vocal cords are unlike humans which means many aliens have trouble speaking Earthlanguage. So, we have made this site to help you on your path to speaking fluently! Input some sample text, or generate some random text, hit the microphone and start reading! We will then grade you on your ability to pronounce Earth phonetics.
 
 This project was a solo endeavour for BC Hacks 5.0.
