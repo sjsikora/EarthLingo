@@ -6,12 +6,13 @@ As a kid, I struggled with pronunciation. Part of the difficulty was because whe
 
 Pick or customize your sentence, and then read it aloud. EarthLingo will give you feedback on your overall pronunciation of the sentence, highlight any mispronounced words, and help you break down your worst pronunciation. Additionally, for every sentence you read, you are scored on individual phonics so you can understand your weak points.
 
-This project was a solo endeavour for BC Hacks 5.0.
-
-Want to see a video of it in action? Right here:
-https://www.loom.com/share/78c6fc9b5fae452eb33c86027acc5e62
+This project was a solo endeavour for BC Hacks 5.0. 
 
 Made with React, Next.js, Typescript, Tailwind, and Microsoft Azure AI.
+
+# See it for yourself.
+
+Want to see a video of it in action? Right [here](https://www.loom.com/share/78c6fc9b5fae452eb33c86027acc5e62):
 
 ## Open Source Acklowngments
 
